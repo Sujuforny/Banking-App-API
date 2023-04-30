@@ -6,6 +6,8 @@ import co.istad.bankingapp.api.user.web.UserDto;
 import com.github.pagehelper.PageInfo;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "Spring")
 public interface UserMapStruct {
     User createUserDtoToUser(CreateUserDto createUserDto);
@@ -13,4 +15,5 @@ public interface UserMapStruct {
     User userDtoToUser(UserDto userDto);
     User editUserToUser(EditUserDto editUserDto);
     PageInfo<UserDto> userPageInfoToUserDtoPageInfo(PageInfo<User> userPageInfo);
+    List<UserDto> userListToUserDToList(List<User> userList);
 }

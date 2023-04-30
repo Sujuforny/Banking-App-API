@@ -7,6 +7,14 @@ import java.util.Set;
 
 public class UserProvider {
     private final String tableName ="users";
+
+    public String buildSelectByStudentCardId(){
+        return new SQL(){{
+            SELECT("*");
+            FROM(tableName);
+            WHERE("student_card_id ILIKE CONCAT('%', #{studentCardId}, '%')");
+        }}.toString();
+    }
     public String buildUpdateIsDeletedByIdSql(){
         return new SQL(){{
             UPDATE(tableName);
@@ -54,6 +62,13 @@ public class UserProvider {
             FROM(tableName);
             WHERE("is_deleted = FALSE");
 
+        }}.toString();
+    }
+    public String buildSelectByName(){
+        return new SQL(){{
+            SELECT("*");
+            FROM(tableName);
+            WHERE("name ILIKE CONCAT('%', #{name}, '%')");
         }}.toString();
     }
 

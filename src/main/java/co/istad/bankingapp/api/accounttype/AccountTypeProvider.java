@@ -3,10 +3,18 @@ package co.istad.bankingapp.api.accounttype;
 import org.apache.ibatis.jdbc.SQL;
 
 public class AccountTypeProvider {
-    public String buildSelectSql(){
+    private final String tableName ="account_types";
+    public String buildSelectById(){
         return new SQL(){{
             SELECT("*");
-            FROM("account_types");
+            FROM(tableName);
+            WHERE("id=#{id}");
+        }}.toString();
+    }
+    public String buildSelectAll(){
+        return new SQL(){{
+            SELECT("*");
+            FROM(tableName);
         }}.toString();
     }
 }

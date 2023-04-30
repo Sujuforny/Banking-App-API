@@ -1,20 +1,27 @@
 package co.istad.bankingapp.api.accounttype;
 
+import co.istad.bankingapp.api.accounttype.web.AccountTypeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AccountTypeServiceImpl implements AccountTypeService{
     private final AccountTypeMapper accountTypeMapper;
-    @Override
-    public List<AccountTypeDto> findAll() {
-        List<AccountType> accountTypes = accountTypeMapper.select();
+    private final AccountTypeMapStruct accountTypeMapStruct;
 
-        List<AccountTypeDto> accountTypeDtos = accountTypes.stream()
-                .map(accountType -> new AccountTypeDto(accountType.getName()))
-                .toList();
-        return accountTypeDtos;
+    @Override
+    public List<AccountTypeDto> findAllAccountType() {
+        List<AccountType> accountTypeList =  accountTypeMapper.selectAllAccountType();
+        return accountTypeMapStruct.accountTypeListToAccountTypeDtoList(accountTypeList);
+    }
+
+    @Override
+    public AccountTypeDto findAccountTypeById(Integer id) {
+       AccountType accountType= accountTypeMapper.selectAccountTypeBYId(id);
+
+        return null;
     }
 }

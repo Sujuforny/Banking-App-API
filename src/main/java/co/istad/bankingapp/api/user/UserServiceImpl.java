@@ -7,10 +7,12 @@ import com.github.pagehelper.ISelect;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
@@ -29,6 +31,27 @@ public class UserServiceImpl implements UserService{
     public UserDto findUserById(Integer id) {
         User user = userMapper.selectById(id).orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("User with %d is not found",id)));
         return userMapStruct.userToUserDto(user);
+    }
+
+    @Override
+    public List<UserDto> findByName(String name) {
+        if(userMapper.isExitsByName(name)) {
+            List<User> userList = userMapper.selectByName(name);
+            List<UserDto> userDtoList = userMapStruct.userListToUserDToList(userList);
+            return userDtoList;
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("User with %s is not found",name));
+    }
+
+    @Override
+    public List<UserDto> findByStudentCardId(String studentCardId) {
+        if(userMapper.isExitsByStudentCardId(studentCardId)){
+            List<User> userList =  userMapper.selectByStudentCardId(studentCardId);
+            //List<UserDto> userDtoList = userMapStruct.userListToUserDToList(userList);
+            return userMapStruct.userListToUserDToList(userList);
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,String.format("User with %s is not found",studentCardId));
     }
 
     @Override
