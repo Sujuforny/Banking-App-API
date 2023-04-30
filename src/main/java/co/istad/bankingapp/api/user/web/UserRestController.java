@@ -120,7 +120,4 @@ public class UserRestController {
                 .data(deletedID)
                 .build();
     }
-
-
-
 }

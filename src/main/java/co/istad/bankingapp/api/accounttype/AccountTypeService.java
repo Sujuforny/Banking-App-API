@@ -7,6 +7,11 @@ import java.util.List;
 
 @Service
 public interface AccountTypeService {
-    List<AccountTypeDto> findAllAccountType();
-    AccountTypeDto findAccountTypeById(Integer id);
+     AccountTypeDto editAccountTypeById(Integer id,AccountTypeDto accountTypeDto);
+     AccountTypeDto insertNewAccountType(AccountTypeDto accountTypeDto);
+     List<AccountTypeDto> findAllAccountType();
+     AccountTypeDto findAccountTypeById(Integer id);
+     List<AccountTypeDto> findAccountTypeByName(String name);
+
+     Integer deleteAccountTypeById(Integer id);
 }
