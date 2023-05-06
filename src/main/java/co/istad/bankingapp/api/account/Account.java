@@ -1,8 +1,10 @@
 package co.istad.bankingapp.api.account;
 
 import co.istad.bankingapp.api.accounttype.AccountType;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -15,5 +17,5 @@ public class Account {
     private String password;
     private String phoneNumber;
     private Integer transferLimit;
-    private Integer accountType;
+    private AccountType accountType;
 }

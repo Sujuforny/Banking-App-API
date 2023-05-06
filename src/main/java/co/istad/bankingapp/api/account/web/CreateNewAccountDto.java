@@ -1,15 +1,16 @@
 package co.istad.bankingapp.api.account.web;
 
-import co.istad.bankingapp.api.accounttype.AccountType;
 import lombok.Builder;
 
+@Builder
+public record CreateNewAccountDto(
 
-public record AccountDto(
         String accountNo,
         String accountName,
         String profile,
+        Integer pin,
+        String password,
         String phoneNumber,
         Integer transferLimit,
-        AccountType accountType
-) {
+        Integer accountType) {
 }
