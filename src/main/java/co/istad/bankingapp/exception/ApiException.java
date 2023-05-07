@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.net.http.HttpHeaders;
@@ -18,6 +19,17 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ApiException {
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public  BaseError<?> handleMaxUploadSizeExceededException(ResponseStatusException e){
+        return BaseError.builder()
+                .status(false)
+                .code(e.getStatusCode().value())
+                .timestamp(LocalDateTime.now())
+                .message("Something went wrong..!")
+                .errors(e.getReason())
+                .build();
+    }
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(ResponseStatusException.class)
     public BaseError<?> handleServiceExcetion(ResponseStatusException e){

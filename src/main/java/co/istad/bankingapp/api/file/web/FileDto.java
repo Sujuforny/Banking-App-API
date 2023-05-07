@@ -1,4 +1,4 @@
-package co.istad.bankingapp.api.file;
+package co.istad.bankingapp.api.file.web;
 
 import lombok.Builder;
 

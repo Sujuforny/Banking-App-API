@@ -1,6 +1,6 @@
 package co.istad.bankingapp.util;
 
-import co.istad.bankingapp.api.file.FileDto;
+import co.istad.bankingapp.api.file.web.FileDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,10 @@ public class FileUtil {
     @Value("${file.base-url}")
     private String fileBaseUrl;
     public FileDto upload(MultipartFile file){
+        System.out.println(file.getSize());
+        if (file.getSize() > 1000000) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "File size exceeds the maximum allowed size of 1MB");
+        }
         int lastDotIndex = file.getOriginalFilename().lastIndexOf(".");
         String extension = file.getOriginalFilename().substring(lastDotIndex+1);
         long size =file.getSize();
