@@ -19,6 +19,8 @@ public class FileUtil {
     private String fileServerPath;
     @Value("${file.base-url}")
     private String fileBaseUrl;
+    @Value("${file.download-image}")
+    private String fileDownloadImage;
     public FileDto upload(MultipartFile file){
         System.out.println(file.getSize());
         if (file.getSize() > 1000000) {
@@ -29,12 +31,14 @@ public class FileUtil {
         long size =file.getSize();
         String name = String.format("%s.%s", UUID.randomUUID(),extension);
         String url = String.format("%s%s",fileBaseUrl,name);
+        String urlDownload =String.format("%s%s",fileDownloadImage,name);
         Path path= Paths.get(fileServerPath + name);
         try {
             Files.copy(file.getInputStream(), path);
             return FileDto.builder()
                     .name(name)
                     .url(url)
+                    .urlDownload(urlDownload)
                     .extension(extension)
                     .size(size)
                     .build();

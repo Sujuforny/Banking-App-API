@@ -2,11 +2,12 @@ package co.istad.bankingapp.api.file;
 
 import co.istad.bankingapp.api.file.web.FileDto;
 import co.istad.bankingapp.util.FileUtil;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,17 +15,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
-
-import java.net.MalformedURLException;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 
 
 
@@ -40,6 +36,8 @@ public class FileServiceImpl implements FileService{
     private String fileServerPath;
     @Value("${file.base-url}")
     private String fileBaseUrl;
+    @Value("${file.download-image}")
+    private String fileDownloadImage;
 
     @Override
     public FileDto uploadSingle(MultipartFile file) {
@@ -67,9 +65,11 @@ public class FileServiceImpl implements FileService{
                             String extension = name.substring(name.lastIndexOf(".") + 1);
                             long size = file.length();
                             String url = String.format("%s%s", fileBaseUrl, name);
+                            String urlDownload =String.format("%s%s",fileDownloadImage,name);
                             fileDtos.add(FileDto.builder()
                                     .name(name)
                                     .url(url)
+                                            .urlDownload(urlDownload)
                                     .extension(extension)
                                     .size(size)
                                     .build());
